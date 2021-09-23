@@ -9,7 +9,6 @@ seconds = time_in_seconds % 60
 minutes = time_in_seconds // 60 % 60
 hours = time_in_seconds // 60 // 60
 
-print(f"{time_in_seconds} seconds = "
-      f"{hours} {'hour' if hours == 1 else 'hours'} "
-      f"{minutes} {'minute' if minutes == 1 else 'minutes'} "
-      f"{seconds} {'second' if seconds == 1 else 'seconds'} ")
+print(f"{hours if hours > 9 else '0' + str(hours)}:"
+      f"{minutes if minutes > 9 else '0' + str(minutes)}:"
+      f"{seconds if seconds > 9 else '0' + str(seconds)}")
