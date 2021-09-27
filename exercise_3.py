@@ -8,7 +8,7 @@ month_number = int(input("Enter the number of the month from 1 to 12: "))
 
 for season in seasons:
     if month_number in season:
-        print(f"It's {season[0]} month")
+        print(f"It's {season[0]} month.")
         break
 
 # dict
@@ -22,4 +22,5 @@ month_number = int(input("Enter the number of the month from 1 to 12: "))
 
 for key, value in seasons.items():
     if month_number in value:
-        print(f"It's {key} month")
+        print(f"It's {key} month.")
+        break
