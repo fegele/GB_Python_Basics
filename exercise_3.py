@@ -19,7 +19,7 @@ class Cell:
         if self.number > other.number:
             return Cell(self.number - other.number)
         else:
-            print('Invalid operation: the 2nd cell is bigger!')
+            print('Invalid operation: the 1st cell is too small!')
 
     def __mul__(self, other):
         return Cell(self.number * other.number)
