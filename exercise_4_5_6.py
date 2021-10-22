@@ -97,7 +97,6 @@ class OfficeEquipment:
 
 class Printer(OfficeEquipment):
     def __init__(self, item_data):
-        self.item_id = Stock.item_id
         type = item_data['type']
         color = item_data['color']
         speed = item_data['speed']
@@ -125,7 +124,6 @@ class Printer(OfficeEquipment):
 
 class Scanner(OfficeEquipment):
     def __init__(self, item_data):
-        self.item_id = Stock.item_id
         type = item_data['type']
         format = item_data['format']
         resolution = item_data['resolution']
@@ -150,7 +148,6 @@ class Scanner(OfficeEquipment):
 
 class Copier(OfficeEquipment):
     def __init__(self, item_data):
-        self.item_id = Stock.item_id
         type = item_data['type']
         color = item_data['color']
         speed = item_data['speed']
