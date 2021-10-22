@@ -4,7 +4,7 @@
 
 class DevByZero(Exception):
     def __init__(self):
-        self.txt = "Ошибка: деление на ноль!"
+        self.txt = "Error: division by zero!"
 
     def __str__(self):
         return self.txt

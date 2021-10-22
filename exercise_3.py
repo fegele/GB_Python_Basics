@@ -10,7 +10,7 @@
 
 class WrongElement(Exception):
     def __init__(self):
-        self.txt = "Ошибка: элемент не является числом!"
+        self.txt = "Error: the element is not a number!"
 
     def __str__(self):
         return self.txt
