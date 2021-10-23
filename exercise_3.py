@@ -8,7 +8,7 @@
 # Класс-исключение должен не позволить пользователю ввести текст (не число) и отобразить соответствующее сообщение.
 # При этом работа скрипта не должна завершаться.
 
-class WrongElement(Exception):
+class WrongInput(Exception):
     def __init__(self, element):
         self.element = element
         self.txt = f"Error: '{element}' is not a number!"
@@ -22,11 +22,10 @@ while True:
     number = input("Enter a number or write 'stop' to end input: ")
     if number != 'stop':
         try:
-            for _ in number:
-                if _ not in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']:
-                    raise WrongElement(number)
+            if not number.isdecimal():
+                raise WrongInput(number)
             result.append(int(number))
-        except WrongElement as error:
+        except WrongInput as error:
             print(error)
     else:
         break
