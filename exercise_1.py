@@ -59,7 +59,7 @@ class Date:
 
 
 date_1 = Date.format_date('12-03-2015')
-date = Date.validate_date(date_1)
+date_1 = Date.validate_date(date_1)
 if date_1:
     print(date_1)
 
@@ -73,12 +73,12 @@ date_3 = Date.validate_date(date_3)
 if date_3:
     print(date_3)
 
-my_date = Date.format_date('29-02-2013')
-my_date = Date.validate_date(my_date)
-if my_date:
-    print(my_date)
+date_4 = Date.format_date('29-02-2013')
+date_4 = Date.validate_date(date_4)
+if date_4:
+    print(date_4)
 
-my_date = Date.format_date('29-02-2000')
-my_date = Date.validate_date(my_date)
-if my_date:
-    print(my_date)
+date_5 = Date.format_date('29-02-2000')
+date_5 = Date.validate_date(date_5)
+if date_5:
+    print(date_5)
