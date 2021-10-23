@@ -9,8 +9,9 @@
 # При этом работа скрипта не должна завершаться.
 
 class WrongElement(Exception):
-    def __init__(self):
-        self.txt = "Error: the element is not a number!"
+    def __init__(self, element):
+        self.element = element
+        self.txt = f"Error: '{element}' is not a number!"
 
     def __str__(self):
         return self.txt
@@ -23,7 +24,7 @@ while True:
         try:
             for _ in number:
                 if _ not in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']:
-                    raise WrongElement()
+                    raise WrongElement(number)
             result.append(int(number))
         except WrongElement as error:
             print(error)
