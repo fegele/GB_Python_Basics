@@ -27,23 +27,26 @@ class Stock:
                 return True
         return False
 
-    def receive(self, item, unit=None):
+    def receive_device(self, item, unit=None):
         if unit:
             if self.is_in_list(unit, item.item_id):
                 self.items[unit].remove(item.item_info)
                 self.items['in stock'].append(item.item_info)
+                print(f'{item.type} received from the {unit}')
             else:
                 print(f'The item is not in the {unit}!')
         else:
             if not self.is_in_list('in stock', item.item_id):
                 self.items['in stock'].append(item.item_info)
+                print(f'{item.type} received')
             else:
                 print('The item is already in stock!')
 
-    def release(self, item, unit):
+    def assign_device(self, item, unit):
         if self.is_in_list('in stock', item.item_id):
             self.items['in stock'].remove(item.item_info)
             self.items[unit].append(item.item_info)
+            print(f'{item.type} assigned to the {unit}')
         else:
             print('The item is not in stock!')
 
@@ -53,7 +56,7 @@ class Stock:
             stock_info[department] = {}
             for item in self.items[department]:
                 if item['type'] not in stock_info[department].keys():
-                    stock_info[department] = {item['type']: 1}
+                    stock_info[department][item['type']] = 1
                 else:
                     stock_info[department][item['type']] += 1
         return str(stock_info)
@@ -61,11 +64,11 @@ class Stock:
     @staticmethod
     def input_item():
         item_data = {}
-        attributes = {'printer': {'color': 'bw / color', 'speed': 'число, ppm', 'resolution': 'dpi'},
+        attributes = {'printer': {'color': 'bw / color', 'speed': 'number, ppm', 'resolution': 'dpi'},
                       'scanner': {'format': 'A4 / A3', 'resolution': 'dpi'},
-                      'copier': {'color': 'bw / color', 'speed': 'число, ppm'}}
-        item_data['type'] = input("Введите тип устройства: ")
-        print("Введите характеристики устройства.")
+                      'copier': {'color': 'bw / color', 'speed': 'number, ppm'}}
+        item_data['type'] = input("Input device type: ")
+        print("Input device attributes.")
         item_attributes = {attribute: input(f'{attribute} ({value}): ') for attribute, value in
                            attributes[item_data['type']].items()}
         for key, value in item_attributes.items():
@@ -75,7 +78,7 @@ class Stock:
 
 class InputTypeError(Exception):
     def __init__(self):
-        self.txt = "Ошибка ввода данных: неверная категория оргтехники!"
+        self.txt = "Input error: wrong device type!"
 
     def __str__(self):
         return self.txt
@@ -83,7 +86,7 @@ class InputTypeError(Exception):
 
 class InputAttributeError(Exception):
     def __init__(self):
-        self.txt = "Ошибка ввода данных: неверная характеристика оргтехники!"
+        self.txt = "Input error: wrong device attribute!"
 
     def __str__(self):
         return self.txt
@@ -98,13 +101,17 @@ class OfficeEquipment:
 class Printer(OfficeEquipment):
     def __init__(self, item_data):
         type = item_data['type']
-        color = item_data['color']
-        speed = item_data['speed']
-        resolution = item_data['resolution']
         if type != 'printer':
             raise InputTypeError
         else:
-            if color not in ['bw', 'color'] or not speed.isdecimal():
+            color = item_data['color']
+            speed = item_data['speed']
+            resolution = item_data['resolution']
+            if any((
+                    color not in ['bw', 'color'],
+                    not speed.isdecimal(),
+                    not resolution.isdecimal()
+            )):
                 raise InputAttributeError
             else:
                 super().__init__(type)
@@ -125,12 +132,15 @@ class Printer(OfficeEquipment):
 class Scanner(OfficeEquipment):
     def __init__(self, item_data):
         type = item_data['type']
-        format = item_data['format']
-        resolution = item_data['resolution']
         if type != 'scanner':
             raise InputTypeError
         else:
-            if format not in ['A4', 'A3']:
+            format = item_data['format']
+            resolution = item_data['resolution']
+            if any((
+                    format not in ['A4', 'A3'],
+                    not resolution.isdecimal()
+            )):
                 raise InputAttributeError
             else:
                 super().__init__(type)
@@ -149,12 +159,15 @@ class Scanner(OfficeEquipment):
 class Copier(OfficeEquipment):
     def __init__(self, item_data):
         type = item_data['type']
-        color = item_data['color']
-        speed = item_data['speed']
         if type != 'copier':
             raise InputTypeError
         else:
-            if color not in ['bw', 'color'] or not speed.isdecimal():
+            color = item_data['color']
+            speed = item_data['speed']
+            if any((
+                    color not in ['bw', 'color'],
+                    not speed.isdecimal()
+            )):
                 raise InputAttributeError
             else:
                 super().__init__(type)
@@ -172,26 +185,38 @@ class Copier(OfficeEquipment):
 
 try:
     scanner_1 = Scanner(Stock.input_item())
-except InputTypeError as error:
-    print(error)
-except InputAttributeError as error:
+except (InputTypeError, InputAttributeError) as error:
     print(error)
 
-printer_1 = Printer({'type': 'printer', 'color': 'bw', 'speed': '10', 'resolution': '300x600'})
-printer_2 = Printer({'type': 'printer', 'color': 'color', 'speed': '30', 'resolution': '600x1200'})
-printer_3 = Printer({'type': 'printer', 'color': 'color', 'speed': '30', 'resolution': '600x1200'})
+scanner_2 = Scanner({'type': 'scanner', 'format': 'A3', 'resolution': '300'})
+printer_1 = Printer({'type': 'printer', 'color': 'bw', 'speed': '10', 'resolution': '600'})
+printer_2 = Printer({'type': 'printer', 'color': 'color', 'speed': '30', 'resolution': '600'})
+copier_1 = Copier({'type': 'copier', 'color': 'bw', 'speed': '15'})
+copier_2 = Copier({'type': 'copier', 'color': 'bw', 'speed': '15'})
 
 stock = Stock()
-stock.receive(printer_1)
-stock.receive(printer_2)
-stock.receive(printer_2)
-stock.receive(printer_3)
-stock.receive(scanner_1)
-stock.release(printer_1, 'account department')
-stock.release(scanner_1, 'account department')
-stock.release(printer_2, 'human resources department')
-stock.release(printer_2, 'human resources department')
-stock.receive(printer_1, 'account department')
-stock.receive(printer_1, 'account department')
+stock.receive_device(printer_1)
+print(stock)
+stock.receive_device(printer_2)
+print(stock)
+stock.receive_device(printer_2)
+print(stock)
+stock.receive_device(copier_1)
+print(stock)
+stock.receive_device(scanner_2)
+print(stock)
+stock.assign_device(printer_1, 'account department')
+print(stock)
+stock.assign_device(scanner_2, 'account department')
+print(stock)
+stock.assign_device(printer_2, 'human resources department')
+print(stock)
+stock.assign_device(printer_2, 'human resources department')
+print(stock)
+stock.receive_device(printer_2, 'human resources department')
+print(stock)
+stock.assign_device(printer_1, 'account department')
+print(stock)
+stock.receive_device(printer_1, 'account department')
 print(stock)
 print(stock.items)
