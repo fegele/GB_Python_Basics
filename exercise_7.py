@@ -36,6 +36,5 @@ class ComplexNumber:
 number_1 = ComplexNumber(2, 3)
 number_2 = ComplexNumber(-2, 1)
 number_3 = number_1 + number_2
-print(number_3)
 number_4 = number_1 * number_2
-print(number_4)
+print(number_1, number_2, number_3, number_4, sep='\n')
