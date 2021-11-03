@@ -1,6 +1,3 @@
-# Реализовать функцию my_func(), которая принимает три позиционных аргумента,
-# и возвращает сумму наибольших двух аргументов.
-
 def my_func(number_1, number_2, number_3):
     """The function takes three numbers and returns sum of two biggest numbers
 
