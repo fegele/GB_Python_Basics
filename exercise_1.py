@@ -1,6 +1,3 @@
-# Создать программно файл в текстовом формате, записать в него построчно данные, вводимые пользователем.
-# Об окончании ввода данных свидетельствует пустая строка.
-
 with open("new_file.txt", "a") as file:
     while True:
         input_line = input("Input some text of press Enter to exit: ").strip()
